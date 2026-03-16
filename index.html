@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<title>Goal Tracker</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<link rel="manifest" href="manifest.json">
+
+
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+<h2>🎯 Goal Tracker</h2>
+
+<ul>
+
+<li onclick="showSection('dashboard')" class="active">
+<i class="fa-solid fa-chart-line"></i> Dashboard
+</li>
+
+<li onclick="showSection('goals')">
+<i class="fa-solid fa-list"></i> My Goals
+</li>
+
+<li onclick="showSection('progress')">
+<i class="fa-solid fa-chart-pie"></i> Progress
+</li>
+
+</ul>
+
+</div>
+
+
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+<!-- TOPBAR -->
+<div class="topbar">
+
+<h2 id="welcomeText"></h2>
+
+<div class="profile-menu">
+
+<img class="avatar"
+src="https://i.pravatar.cc/40"
+onclick="toggleMenu()">
+
+<div class="dropdown" id="profileDropdown">
+
+<p id="profileName"></p>
+
+<button onclick="exportGoals()">⬇ Export Goals</button>
+
+<button onclick="document.getElementById('importFile').click()">⬆ Import Goals</button>
+
+<input type="file" id="importFile" accept=".json" style="display:none" onchange="importGoals(event)">
+
+<button onclick="logout()">Logout</button>
+
+<button onclick="toggleTheme()">🌙 Toggle Theme</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- DASHBOARD -->
+
+<div id="dashboard" class="section">
+
+<div class="dashboard-grid">
+
+<!-- Goal Streak -->
+<div class="stat-card">
+<h4>🔥 Goal Streak</h4>
+<p id="streakCount">0</p>
+<small>Days in a row</small>
+</div>
+
+<!-- Add Goal -->
+<div class="add-goal-card">
+<h3>➕ Add Goal</h3>
+<input id="goalInput" placeholder="Enter new goal">
+<input type="date" id="goalDate">
+<button onclick="addGoal()">Add Goal</button>
+</div>
+
+<!-- Today's Motivation -->
+<div class="quote-box">
+<h3>💡 Today's Motivation</h3>
+<p id="quoteText"></p>
+</div>
+
+<!-- Today's Deadlines -->
+<div id="reminderBox" class="reminder-box hidden"></div>
+
+</div>
+
+
+<!-- Today's Focus -->
+<div class="today-focus">
+
+<h3>🎯 Today's Focus</h3>
+
+<ul id="todayList"></ul>
+
+</div>
+
+
+<!-- Stats -->
+<div class="stats-grid">
+
+<div class="stat-card">
+<h4>Total Goals</h4>
+<p id="goalCount">0</p>
+</div>
+
+<div class="stat-card">
+<h4>Completed Goals</h4>
+<p id="completedCount">0</p>
+</div>
+
+</div>
+
+</div>
+
+<!-- GOALS PAGE -->
+
+<div id="goals" class="section hidden">
+
+<h3>My Goals</h3>
+
+<input 
+id="goalSearch" 
+placeholder="Search goals..."
+onkeyup="searchGoal()"
+style="padding:10px; width:100%; margin-bottom:15px; border-radius:6px; border:none;">
+
+<div id="goalList2" class="goal-grid"></div>
+
+</div>
+
+
+<!-- PROGRESS PAGE -->
+<div id="progress" class="section hidden">
+
+<h3>Your Progress</h3>
+
+<!-- CIRCULAR PROGRESS -->
+<div class="progress-card">
+
+<div class="circle">
+
+<svg width="150" height="150">
+
+<circle
+cx="75"
+cy="75"
+r="60"
+stroke="#334155"
+stroke-width="10"
+fill="none"/>
+
+<circle
+id="progressCircle"
+cx="75"
+cy="75"
+r="60"
+stroke="#22c55e"
+stroke-width="10"
+fill="none"
+stroke-dasharray="377"
+stroke-dashoffset="377"/>
+
+</svg>
+
+<div class="circle-text">
+<span id="progressPercent">0%</span>
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- WEEKLY PROGRESS -->
+<div class="weekly-progress">
+
+<h3>📅 Weekly Progress</h3>
+
+<div id="weeklyGrid" class="weekly-grid"></div>
+
+</div>
+
+
+
+<!-- MONTHLY CHART -->
+<div class="monthly-progress">
+
+<h3>📊 Monthly Goal Analytics</h3>
+
+<canvas id="monthlyChart"></canvas>
+
+</div>
+
+
+
+<!-- HEATMAP -->
+<div class="heatmap">
+
+<h3>🔥 Goal Completion Heatmap</h3>
+
+<div id="heatmapGrid" class="heatmap-grid"></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
